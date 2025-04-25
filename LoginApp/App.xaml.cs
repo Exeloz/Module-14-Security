@@ -31,6 +31,7 @@ namespace LoginApp
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<IConfigurationService, ConfigurationService>();
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>
             {
                 BaseViewModel ViewModelFactory(Type viewModelType)

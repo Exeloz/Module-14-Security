@@ -1,20 +1,28 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using LoginApp.Model;
 using System.IO;
+using System.Configuration;
+using LoginApp.Utils.Services.Interfaces;
 
 public class ApplicationDbContext : DbContext
 {
+    private readonly IConfigurationService _configurationService;
+
+    public ApplicationDbContext(IConfigurationService configurationService)
+    {
+        _configurationService = configurationService;
+    }
+
     protected override void OnConfiguring(
        DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LoginApp", "LoginApp.db");
-            Directory.CreateDirectory(Path.GetDirectoryName(dbPath));
-            var connectionString = $"Data Source={dbPath}";
+        var rawDbPath = ConfigurationManager.AppSettings["DbPath"];
+        var resolvedDbPath = Environment.ExpandEnvironmentVariables(rawDbPath);
 
-            optionsBuilder.UseSqlite(connectionString);
-        }
+        Directory.CreateDirectory(Path.GetDirectoryName(resolvedDbPath));
+        var connectionString = $"Data Source={resolvedDbPath}";
+
+        optionsBuilder.UseSqlite(connectionString);
     }
 
     public DbSet<User> Users { get; set; }
@@ -23,12 +31,13 @@ public class ApplicationDbContext : DbContext
     {
         if (!Users.Any())
         {
-            var user1 = new User { Email = "admin@test.com", Password = "motdepasse" };
-            var user2 = new User { Email = "user@test.com", Password = "bonjour" };
+            var password1 = _configurationService.GetDefaultAdminPassword();
+            var user1 = new User { Email = _configurationService.GetDefaultAdminUserName(), Password = password1 };
 
-            Users.AddRange(user1, user2);
+            Users.AddRange(user1);
 
             SaveChanges();
         }
+
     }
 }
