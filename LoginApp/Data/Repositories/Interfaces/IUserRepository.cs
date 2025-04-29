@@ -9,6 +9,6 @@ namespace LoginApp.Data.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        public User? GetByEmailAndPassword(string email, string password);
+        public User? GetByEmail(string email);
     }
 }
