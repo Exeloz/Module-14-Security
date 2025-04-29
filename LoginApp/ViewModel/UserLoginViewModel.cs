@@ -7,6 +7,7 @@ using LoginApp.Utils.Commands;
 using LoginApp.Utils.Services.Interfaces;
 using System.Windows.Input;
 using LoginApp.Utils;
+using System.Windows;
 
 namespace LoginApp.ViewModel
 {
@@ -57,16 +58,24 @@ namespace LoginApp.ViewModel
         {
             ErrorMessage = string.Empty;
 
-            bool isValidUser = _userService.Login(Email, Password);
-            if (isValidUser)
+            try
             {
-                _navigationService.NavigateTo<WelcomeViewModel>();
-                
+                bool isValidUser = _userService.Login(Email, Password);
+                if (isValidUser)
+                {
+                    _navigationService.NavigateTo<WelcomeViewModel>();
+
+                }
+                else
+                {
+                    ErrorMessage = "Mot de passe ou email non valide";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ErrorMessage = "Mot de passe ou email non valide";
-            }              
+                MessageBox.Show($"Une erreur s'est produite pendant la connexion.");
+            }
+
         }
 
         private bool CanLogin()
