@@ -7,6 +7,9 @@ using LoginApp.Model;
 using LoginApp.Utils;
 using LoginApp.Data.Repositories;
 using LoginApp.Data.Repositories.Interfaces;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using NLog;
 
 namespace LoginApp
 {
@@ -18,6 +21,13 @@ namespace LoginApp
         {
             IServiceCollection services = new ServiceCollection();
 
+            LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration("../../../NLog.config");
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddNLog();
+            });
+
             services.AddSingleton<MainWindow>(provider => new MainWindow
             {
                 DataContext = provider.GetRequiredService<MainViewModel>()
@@ -26,7 +36,6 @@ namespace LoginApp
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<UserLoginViewModel>();
             services.AddSingleton<WelcomeViewModel>();
-
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
