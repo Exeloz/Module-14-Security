@@ -14,6 +14,14 @@ namespace LoginApp.Utils.Services
         {
             return ConfigurationManager.AppSettings["DbPath"];
         }
+        public string GetLogConfigPath()
+        {
+            return ConfigurationManager.AppSettings["LogConfigPath"];
+        }
+        public string GetLogFilePath()
+        {
+            return ConfigurationManager.AppSettings["LogFilePath"];
+        }
 
         public string GetDefaultAdminUserName()
         {
