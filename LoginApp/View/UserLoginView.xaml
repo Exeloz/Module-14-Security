@@ -11,7 +11,7 @@
             <Label Width="200">Adresse courriel</Label>
             <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0 0 0 20"/>
             <Label Width="200">Mot de passe</Label>
-            <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0 0 0 20"/>
+            <PasswordBox x:Name="PasswordBox" PasswordChanged="PasswordBox_PasswordChanged" Width="200" Margin="0 0 0 20"/>
             <TextBlock Text="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" HorizontalAlignment="Center" Margin="10"/>
             <Button Content="Se connecter" Command="{Binding LoginCommand}" Width="200"/>
         </StackPanel>

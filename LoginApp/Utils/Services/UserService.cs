@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using LoginApp.Data.Repositories.Interfaces;
 using LoginApp.Model;
 using LoginApp.Utils.Services.Interfaces;
@@ -26,13 +27,18 @@ namespace LoginApp.Utils.Services
 
         public bool Login(string email, string password)
         {
-            User? user = _userRepository.GetByEmailAndPassword(email, password);
-            if (user != null)
-            {
-               _currentUser = user;
-            }
-            
-            return user != null;
+
+            User? user = _userRepository.GetByEmail(email);
+
+            if (user is null)
+                return false;
+
+            bool isValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+            if (!isValid)
+                return false;
+
+            _currentUser = user;
+            return true;
         }
 
     }

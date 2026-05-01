@@ -16,9 +16,9 @@ namespace LoginApp.Data.Repositories
             _context = context;
         }
 
-        public User? GetByEmailAndPassword(string email, string password)
+        public User? GetByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
+            return _context.Users.FirstOrDefault(u => u.Email == email);
         }
     }
 }

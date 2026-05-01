@@ -31,8 +31,8 @@ public class ApplicationDbContext : DbContext
     {
         if (!Users.Any())
         {
-            var password1 = _configurationService.GetDefaultAdminPassword();
-            var user1 = new User { Email = _configurationService.GetDefaultAdminUserName(), Password = password1 };
+            var hashedPassword1 = BCrypt.Net.BCrypt.HashPassword(_configurationService.GetDefaultAdminPassword());
+            var user1 = new User { Email = _configurationService.GetDefaultAdminUserName(), Password = hashedPassword1 };
 
             Users.AddRange(user1);
 
