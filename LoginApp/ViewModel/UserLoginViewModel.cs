@@ -64,18 +64,19 @@ namespace LoginApp.ViewModel
                 if (isValidUser)
                 {
                     _navigationService.NavigateTo<WelcomeViewModel>();
-
+                
                 }
                 else
                 {
+
                     ErrorMessage = "Mot de passe ou email non valide";
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Une erreur s'est produite pendant la connexion.");
-            }
 
+                MessageBox.Show("Une erreur s'est produite pendant la connexion.");
+            }
         }
 
         private bool CanLogin()

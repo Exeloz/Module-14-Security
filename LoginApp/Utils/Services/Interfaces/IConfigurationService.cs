@@ -9,7 +9,8 @@ namespace LoginApp.Utils.Services.Interfaces
     public interface IConfigurationService
     {
         string GetDbPath();
-
+        string GetLogConfigPath();
+        string GetLogFilePath();
         string GetDefaultAdminUserName();
 
         string GetDefaultAdminPassword();

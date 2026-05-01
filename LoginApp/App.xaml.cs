@@ -20,8 +20,10 @@ namespace LoginApp
         public App()
         {
             IServiceCollection services = new ServiceCollection();
+            IConfigurationService configurationService = new ConfigurationService();
 
-            LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration("../../../NLog.config");
+            LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(configurationService.GetLogConfigPath());
+            LogManager.Configuration.Variables["logFilePath"] = Environment.ExpandEnvironmentVariables(configurationService.GetLogFilePath());
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.ClearProviders();
@@ -77,7 +79,5 @@ namespace LoginApp
 
             base.OnStartup(e);
         }
-
-
     }
 }

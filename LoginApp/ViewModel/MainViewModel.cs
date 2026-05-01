@@ -34,14 +34,15 @@ namespace LoginApp.ViewModel
             NavigateToLoginViewCommand = new RelayCommand(() => NavigationService.NavigateTo<UserLoginViewModel>());
             NavigationService.NavigateTo<UserLoginViewModel>();
             _logger = logger;
+
             TesterLog();
         }
 
         private void TesterLog()
         {
             _logger.LogInformation("Test log : opération normale");
-            _logger.LogWarning("Test log : comportement inattendu");
-            _logger.LogError("Test log : erreur critique");
+            _logger.LogWarning("Test log : comportement innatendu.");
+            _logger.LogError("Test log : erreur!");
         }
     }
 }
