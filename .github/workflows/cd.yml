@@ -2,7 +2,7 @@ name: Déploiement en continu
 
 on:
     push:
-      branches: [ oli_security , ccl_security ]
+      branches: [ security ]
 
 jobs:
   publish:
