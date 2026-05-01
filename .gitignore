@@ -2,5 +2,6 @@
 **/bin
 **/obj
 **/Migrations
+/LoginApp/App.config
 
 /.github/copilot-instructions.md
